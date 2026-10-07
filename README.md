@@ -1,5 +1,7 @@
 # BAI – BastiAI
 
+**[Try BAI Web Beta / BAI Web ausprobieren](https://bastoba.github.io/BAI-BastiAI/)** — Browser configurator for Lua 0.2.7v3. Exports `BAI_Config.lua`; requires an existing 0.2.7v3 AI installation. Includes offline HTML download and T-mode import/export.
+
 **Homunculus AI configurator for Ragnarok Zero Global**
 
 BAI (BastiAI) is a Windows application for creating and managing custom Homunculus AI configurations for **Ragnarok Zero Global**.
