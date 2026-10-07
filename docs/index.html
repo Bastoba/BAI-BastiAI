@@ -130,7 +130,7 @@ function importData(data){
   }
   save();render();message('Importiert. Die Einstellungen sind jetzt im Browser verfügbar.');
 }
-function save(){try{localStorage.setItem(STORAGE,JSON.stringify(state));$('#saved').dataset.message='Automatisch im Browser gespeichert';$('#saved').dataset.message='Automatisch im Browser gespeichert';$('#saved').textContent=uiText('Automatisch im Browser gespeichert');}catch{$('#saved').dataset.message='Speicherung nicht verfügbar · bitte Profil herunterladen';$('#saved').textContent=uiText('Speicherung nicht verfügbar · bitte Profil herunterladen');}}
+function save(){try{localStorage.setItem(STORAGE,JSON.stringify(state));$('#saved').dataset.message='Automatisch im Browser gespeichert';$('#saved').dataset.message='Automatisch im Browser gespeichert';$('#saved').textContent=uiText('Automatisch im Browser gespeichert');return true;}catch{$('#saved').dataset.message='Speicherung nicht verfügbar · bitte Profil herunterladen';$('#saved').textContent=uiText('Speicherung nicht verfügbar · bitte Profil herunterladen');return false;}}
 function field(obj,key,path){
   if(HIDDEN.has(key))return null;
   const val=obj[key],wrap=document.createElement('div');wrap.className='field';
@@ -223,9 +223,9 @@ document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{page=b.datase
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{selected=b.dataset.mode;render();});
 $('#file').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>3000000)throw Error('Datei zu groß (max. 3 MB)');importData(JSON.parse(await f.text()));if(profiles.length)profiles[profileIndex]=state.Profile;}catch(err){message('Import fehlgeschlagen: '+err.message,true);}e.target.value='';};
 $('#profile-select').onchange=e=>{if(profiles.length){profiles[profileIndex]=state.Profile;profileIndex=Number(e.target.value);state.Profile=profiles[profileIndex];save();render();}};
-for(const id of ['save-top','save-bottom'])$('#'+id).onclick=()=>{save();render();message('Einstellungen lokal gespeichert. Eine Profildatei erhältst du über „Profil herunterladen“.');};
+for(const id of ['save-top','save-bottom'])$('#'+id).onclick=()=>{const ok=save();render();message(ok?'Einstellungen lokal gespeichert. Eine Profildatei erhältst du über „Profil herunterladen“.':'Speicherung nicht verfügbar · bitte Profil herunterladen',!ok);};
 $('#install').onclick=()=>{page='Installation';render();};
-const originalSave=save;save=()=>{if(profiles.length)profiles[profileIndex]=state.Profile;originalSave();try{localStorage.setItem('bai-web-profiles',JSON.stringify({profiles,profileIndex}));}catch{}};
+const originalSave=save;save=()=>{if(profiles.length)profiles[profileIndex]=state.Profile;const ok=originalSave();try{localStorage.setItem('bai-web-profiles',JSON.stringify({profiles,profileIndex}));}catch{}return ok;};
 try{language=readPreference('bai-web-language')==='en'?'en':'de';}catch{}
 $('#language').onchange=e=>{language=e.target.value;try{writePreference('bai-web-language',language);}catch{}render();message('Bereit.');};
 $('#profile-download').onclick=exportProfile;$('#help-close').onclick=()=>$('#help-dialog').close();$('#help-dialog').onclick=e=>{if(e.target===$('#help-dialog'))$('#help-dialog').close();};
