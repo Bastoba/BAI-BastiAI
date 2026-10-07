@@ -1,6 +1,6 @@
 # BAI – BastiAI
 
-**[Try BAI Web Beta / BAI Web ausprobieren](https://bastoba.github.io/BAI-BastiAI/)** — Browser configurator for Lua 0.2.7v3. Exports `BAI_Config.lua`; requires an existing 0.2.7v3 AI installation. Includes offline HTML download and T-mode import/export.
+**[Try BAI Web Beta / BAI Web ausprobieren](https://bastoba.github.io/BAI-BastiAI/)** — Standalone browser configurator for Lua 0.2.7v3. Downloads both `AI.lua` and `BAI_Config.lua`; no desktop installation required. Web and Desktop use the same Lua runtime. Includes offline HTML download and T-mode import/export.
 
 **Homunculus AI configurator for Ragnarok Zero Global**
 
